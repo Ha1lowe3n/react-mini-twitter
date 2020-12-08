@@ -1,5 +1,7 @@
 import React  from 'react';
 
+import './post-list-item.css';
+
 const PostListItem = () => {
   return (
     <li className="app-list-item d-flex justify-content-between">
@@ -10,14 +12,14 @@ const PostListItem = () => {
       <div className="d-flex justify-content-center align-items-center">
         <button 
           type="button"
-          className="btn-star btn-sm"
+          className="btn-star btn-light"
         >
           <i className="fa fa-star"></i>
         </button>
 
         <button 
           type="button"
-          className="btn-trash btn-sm" 
+          className="btn-trash btn-light" 
         >
           <i className="fa fa-trash-o"></i>
         </button>
