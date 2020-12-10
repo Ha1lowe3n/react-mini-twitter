@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import nextId from "react-id-generator";
 
 import AppHeader from '../app-header/app-header';
 import PostList from '../post-list/post-list';
@@ -11,9 +12,9 @@ import './app.css';
 export default class App extends Component {
   state = {
     data : [
-      {label: "Going to learn React", important: true, id: 'dffjh'},
-      {label: "That is so good", important: false, id: 'u6uty'},
-      {label: "Wazzup?", important: false, id: 'bnmbn'}
+      {label: "Going to learn React", important: true, id: nextId()},
+      {label: "That is so good", important: false, id: nextId()},
+      {label: "Wazzup?", important: false, id: nextId()}
     ]
   }
 
@@ -30,6 +31,21 @@ export default class App extends Component {
     });
   }
 
+  addItem = (body) => {
+    const newItem = {
+      label: body,
+      important: false,
+      id: nextId()
+    }
+
+    console.log(newItem.id);
+
+    this.setState( ({ data }) => {
+      const newData = [...data, newItem];
+      return { data: newData }
+    });
+  } 
+
   render = () => {
     return (
       <div className="app">
@@ -44,7 +60,9 @@ export default class App extends Component {
           posts={ this.state.data } 
           onDelete={ this.deleteItem }
         />
-        <PostAddForm />
+        <PostAddForm 
+          onAdd={ this.addItem }
+        />
       </div>
     )
   }
