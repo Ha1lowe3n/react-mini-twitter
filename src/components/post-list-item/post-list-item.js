@@ -1,4 +1,4 @@
-import React, {Component}  from 'react';
+import React, { Component }  from 'react';
 
 import './post-list-item.css';
 
@@ -9,20 +9,20 @@ export default class PostListItem extends Component {
   }
 
   onImportant = () => {
-    this.setState(({important}) => ({
+    this.setState(({ important }) => ({
       important: !important
     }))
   }
 
   onLike = () => {
-    this.setState(({like}) => ({
+    this.setState(({ like }) => ({
       like: !like
     }))
   }
 
   render() {
-    const {label} = this.props;
-    const {important, like} = this.state;
+    const { label, onDelete } = this.props;
+    const { important, like } = this.state;
 
     let classNames = 'app-list-item d-flex justify-content-between';
 
@@ -34,19 +34,19 @@ export default class PostListItem extends Component {
     }
 
     return (
-      <div className={classNames}>
+      <div className={ classNames }>
         <span 
           className="app-list-item-label"
-          onClick={this.onLike}
+          onClick={ this.onLike }
         >
-          {label}
+          { label }
         </span>
   
         <div className="d-flex justify-content-center align-items-center">
           <button 
             type="button"
             className="btn-star btn-light"
-            onClick={this.onImportant}
+            onClick={ this.onImportant }
           >
             <i className="fa fa-star"></i>
           </button>
@@ -54,6 +54,7 @@ export default class PostListItem extends Component {
           <button 
             type="button"
             className="btn-trash btn-light" 
+            onClick={ onDelete }
           >
             <i className="fa fa-trash-o"></i>
           </button>
