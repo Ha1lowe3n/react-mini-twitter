@@ -17,7 +17,8 @@ export default class App extends Component {
       {label: "That is so good", important: false, like: false, id: nextId()},
       {label: "Wazzup?", important: false, like: false, id: nextId()}
     ],
-    term : ''
+    term : '',
+    filter : 'all'
   }
 
   deleteItem = (id) => {
@@ -85,17 +86,30 @@ export default class App extends Component {
     });
   }
 
+  filterPost = (items, filter) => {
+    if (filter === 'like') {
+      return items.filter(item => item.like);
+    } else {
+      return items;
+    }
+  }
+
   onUpdateSearch = (term) => {
     this.setState({ term })
   }
 
+  onFilterSelect = (filter) => {
+    this.setState({ filter });
+  }
+
   render = () => {
-    const { data, term } = this.state;
+    const { data, term, filter } = this.state;
 
     const liked = data.filter(item => item.like).length,
           allPosts = data.length;
 
-    const visiblePosts = this.searchPost(data, term);
+    const visiblePosts = this.filterPost(this.searchPost(data, term),
+    filter);
 
     return (
       <div className="app">
@@ -105,8 +119,11 @@ export default class App extends Component {
         />
   
         <div className="search-panel d-flex">
-          <SearchPanel onUpdateSearch={ this.onUpdateSearch }/>
-          <PostStatusFilter />
+          <SearchPanel onUpdateSearch={ this.onUpdateSearch } />
+          <PostStatusFilter 
+            filter={ filter } 
+            onFilterSelect={ this.onFilterSelect } 
+          />
         </div>
   
         <PostList 
@@ -115,9 +132,8 @@ export default class App extends Component {
           onToggleImportant={ this.onToggleImportant }
           onToggleLike={ this.onToggleLike }
         />
-        <PostAddForm 
-          onAdd={ this.addItem }
-        />
+
+        <PostAddForm onAdd={ this.addItem } />
       </div>
     )
   }
